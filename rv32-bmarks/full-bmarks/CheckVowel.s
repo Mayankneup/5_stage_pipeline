@@ -40,94 +40,92 @@ memset:
 	addi	sp,sp,48
 	jr	ra
 	.size	memset, .-memset
-	.section	.rodata
-	.align	2
-.LC0:
-	.ascii	"bcdfghjklmnpqrstvwxy"
 	.section	.text.main,"ax",@progbits
 	.align	2
 	.globl	main
 	.type	main, @function
 main:
-	addi	sp,sp,-48
-	sw	ra,44(sp)
-	sw	s0,40(sp)
-	addi	s0,sp,48
+	addi	sp,sp,-128
+	sw	ra,124(sp)
+	sw	s0,120(sp)
+	addi	s0,sp,128
 	sw	zero,-20(s0)
 	sw	zero,-24(s0)
-	lui	a5,%hi(.LC0)
-	addi	a5,a5,%lo(.LC0)
-	lw	a1,0(a5)
-	lw	a2,4(a5)
-	lw	a3,8(a5)
-	lw	a4,12(a5)
-	sw	a1,-44(s0)
-	sw	a2,-40(s0)
-	sw	a3,-36(s0)
-	sw	a4,-32(s0)
-	lw	a5,16(a5)
-	sw	a5,-28(s0)
+	li	a5,1635344384
+	addi	a5,a5,333
+	sw	a5,-124(s0)
+	li	a5,560689152
+	addi	a5,a5,-415
+	sw	a5,-120(s0)
+	li	a5,10
+	sw	a5,-116(s0)
+	addi	a5,s0,-112
+	li	a4,87
+	mv	a2,a4
+	li	a1,0
+	mv	a0,a5
+	call	memset
 	sw	zero,-20(s0)
 	j	.L6
 .L9:
 	lw	a5,-20(s0)
 	addi	a4,s0,-16
 	add	a5,a4,a5
-	lbu	a4,-28(a5)
+	lbu	a4,-108(a5)
 	li	a5,97
 	beq	a4,a5,.L7
 	lw	a5,-20(s0)
 	addi	a4,s0,-16
 	add	a5,a4,a5
-	lbu	a4,-28(a5)
+	lbu	a4,-108(a5)
 	li	a5,65
 	beq	a4,a5,.L7
 	lw	a5,-20(s0)
 	addi	a4,s0,-16
 	add	a5,a4,a5
-	lbu	a4,-28(a5)
+	lbu	a4,-108(a5)
 	li	a5,101
 	beq	a4,a5,.L7
 	lw	a5,-20(s0)
 	addi	a4,s0,-16
 	add	a5,a4,a5
-	lbu	a4,-28(a5)
+	lbu	a4,-108(a5)
 	li	a5,69
 	beq	a4,a5,.L7
 	lw	a5,-20(s0)
 	addi	a4,s0,-16
 	add	a5,a4,a5
-	lbu	a4,-28(a5)
+	lbu	a4,-108(a5)
 	li	a5,105
 	beq	a4,a5,.L7
 	lw	a5,-20(s0)
 	addi	a4,s0,-16
 	add	a5,a4,a5
-	lbu	a4,-28(a5)
+	lbu	a4,-108(a5)
 	li	a5,73
 	beq	a4,a5,.L7
 	lw	a5,-20(s0)
 	addi	a4,s0,-16
 	add	a5,a4,a5
-	lbu	a4,-28(a5)
+	lbu	a4,-108(a5)
 	li	a5,111
 	beq	a4,a5,.L7
 	lw	a5,-20(s0)
 	addi	a4,s0,-16
 	add	a5,a4,a5
-	lbu	a4,-28(a5)
+	lbu	a4,-108(a5)
 	li	a5,79
 	beq	a4,a5,.L7
 	lw	a5,-20(s0)
 	addi	a4,s0,-16
 	add	a5,a4,a5
-	lbu	a4,-28(a5)
+	lbu	a4,-108(a5)
 	li	a5,117
 	beq	a4,a5,.L7
 	lw	a5,-20(s0)
 	addi	a4,s0,-16
 	add	a5,a4,a5
-	lbu	a4,-28(a5)
+	lbu	a4,-108(a5)
 	li	a5,85
 	bne	a4,a5,.L8
 .L7:
@@ -146,9 +144,9 @@ main:
 	call	test
 	mv	a5,a0
 	mv	a0,a5
-	lw	ra,44(sp)
-	lw	s0,40(sp)
-	addi	sp,sp,48
+	lw	ra,124(sp)
+	lw	s0,120(sp)
+	addi	sp,sp,128
 	jr	ra
 	.size	main, .-main
 	.section	.text.test,"ax",@progbits
