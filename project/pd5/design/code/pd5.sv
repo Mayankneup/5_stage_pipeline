@@ -134,7 +134,9 @@ module pd5 #(
          fd_q.insn <= NOP;
          fd_q.valid <= 1'b0;
      end
-     else if (!stall)   fd_q <= '{valid: 1'b1, pc: f_pc, insn: f_insn};
+     else if (!stall)   fd_q <= '{valid: 1'b1,
+                                  pc: f_pc,
+                                  insn: f_insn};
  end
 
  // --------------------------------------------------------------- Decode
@@ -239,21 +241,39 @@ module pd5 #(
                                    (writes(1'b1, de_q.rd, d_rs2) && !c_memwren));
  assign stall    = load_use || wb_conflict(d_rs1) || wb_conflict(d_rs2);
 
- assign de_d = '{valid: fd_q.valid, insn: d_insn,
-                 pc: d_pc, opcode: d_opcode, rd: d_rd, rs1: d_rs1, rs2: d_rs2,
-                 funct3: d_funct3, funct7: d_funct7, imm: d_imm,
-                 rs1_data: r_rs1_data, rs2_data: r_rs2_data,
-                 pcsel: c_pcsel, regwren: c_regwren, rs1sel: c_rs1sel,
-                 rs2sel: c_rs2sel, memren: c_memren, memwren: c_memwren,
-                 wbsel: c_wbsel, alusel: c_alusel};
+ assign de_d = '{valid: fd_q.valid,
+                 insn: d_insn,
+                 pc: d_pc,
+                 opcode: d_opcode,
+                 rd: d_rd,
+                 rs1: d_rs1,
+                 rs2: d_rs2,
+                 funct3: d_funct3,
+                 funct7: d_funct7,
+                 imm: d_imm,
+                 rs1_data: r_rs1_data,
+                 rs2_data: r_rs2_data,
+                 pcsel: c_pcsel,
+                 regwren: c_regwren,
+                 rs1sel: c_rs1sel,
+                 rs2sel: c_rs2sel,
+                 memren: c_memren,
+                 memwren: c_memwren,
+                 wbsel: c_wbsel,
+                 alusel: c_alusel};
 
  // D/E: a bubble is the NOP (addi x0, x0, 0) carrying decode's PC
  always_ff @(posedge clk) begin
      if (reset)
          de_q <= '0;
      else if (redirect || stall)
-         de_q <= '{pc: d_pc, opcode: OP_IMM, regwren: 1'b1, rs2sel: 1'b1,
-                   alusel: ALU_ADD, wbsel: WB_ALU, default: '0};
+         de_q <= '{pc: d_pc,
+                   opcode: OP_IMM,
+                   regwren: 1'b1,
+                   rs2sel: 1'b1,
+                   alusel: ALU_ADD,
+                   wbsel: WB_ALU,
+                   default: '0};
      else
          de_q <= de_d;
  end
@@ -321,11 +341,18 @@ module pd5 #(
  assign redirect = e_br_taken | de_q.pcsel;
  assign e_target = {e_alu_res[AWIDTH-1:1], 1'b0};
 
- assign em_d = '{valid: de_q.valid, insn: de_q.insn,
-                 pc: de_q.pc, alu_res: e_alu_res, rs2_data: e_store_data,
-                 rs2: de_q.rs2, rd: de_q.rd, funct3: de_q.funct3,
-                 regwren: de_q.regwren, memren: de_q.memren,
-                 memwren: de_q.memwren, wbsel: de_q.wbsel};
+ assign em_d = '{valid: de_q.valid,
+                 insn: de_q.insn,
+                 pc: de_q.pc,
+                 alu_res: e_alu_res,
+                 rs2_data: e_store_data,
+                 rs2: de_q.rs2,
+                 rd: de_q.rd,
+                 funct3: de_q.funct3,
+                 regwren: de_q.regwren,
+                 memren: de_q.memren,
+                 memwren: de_q.memwren,
+                 wbsel: de_q.wbsel};
 
  always_ff @(posedge clk) begin
      if (reset) em_q <= '0;
@@ -361,9 +388,14 @@ module pd5 #(
      .data_vld_o ()
  );
 
- assign mw_d = '{valid: em_q.valid, insn: em_q.insn,
-                 pc: em_q.pc, alu_res: em_q.alu_res, mem_data: m_load_data,
-                 rd: em_q.rd, funct3: em_q.funct3, regwren: em_q.regwren,
+ assign mw_d = '{valid: em_q.valid,
+                 insn: em_q.insn,
+                 pc: em_q.pc,
+                 alu_res: em_q.alu_res,
+                 mem_data: m_load_data,
+                 rd: em_q.rd,
+                 funct3: em_q.funct3,
+                 regwren: em_q.regwren,
                  wbsel: em_q.wbsel};
 
  always_ff @(posedge clk) begin
