@@ -26,11 +26,11 @@ typedef enum {false, true} bool;
 #endif
 
 #define SWAP(a,b)   { int t; t=a; a=b; b=t; }  // Macro for swapping
-#define INDEX 8
+#define INDEX 20
 void bubble_srt(int a[], int n);
 int main(void) {
    int i;
-   int array[INDEX] = {12, 9, 4, 99, 120, 1, 3, 10};
+   int array[INDEX] = {42, 115, 23, 89, 142, 7, 64, 128, 91, 12, 105, 53, 77, 134, 999};
    bubble_srt(array, INDEX);        // Sort the array
 
    PRINT_INT("test: ", test(array));

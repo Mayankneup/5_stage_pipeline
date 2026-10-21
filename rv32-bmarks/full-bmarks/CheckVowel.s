@@ -1,158 +1,213 @@
 	.file	"CheckVowel.c"
 	.option nopic
+	.option norelax
+	.attribute arch, "rv32i2p1"
+	.attribute unaligned_access, 0
+	.attribute stack_align, 16
 	.text
+	.section	.text.memset,"ax",@progbits
+	.align	2
+	.globl	memset
+	.type	memset, @function
+memset:
+	addi	sp,sp,-48
+	sw	ra,44(sp)
+	sw	s0,40(sp)
+	addi	s0,sp,48
+	sw	a0,-36(s0)
+	sw	a1,-40(s0)
+	sw	a2,-44(s0)
+	lw	a5,-36(s0)
+	sw	a5,-20(s0)
+	j	.L2
+.L3:
+	lw	a5,-20(s0)
+	addi	a4,a5,1
+	sw	a4,-20(s0)
+	lw	a4,-40(s0)
+	andi	a4,a4,0xff
+	sb	a4,0(a5)
+	lw	a5,-44(s0)
+	addi	a5,a5,-1
+	sw	a5,-44(s0)
+.L2:
+	lw	a5,-44(s0)
+	bne	a5,zero,.L3
+	lw	a5,-36(s0)
+	mv	a0,a5
+	lw	ra,44(sp)
+	lw	s0,40(sp)
+	addi	sp,sp,48
+	jr	ra
+	.size	memset, .-memset
 	.section	.rodata
 	.align	2
 .LC0:
-	.string	"CheckVowel!\n"
-	.zero	7
-	.text
+	.ascii	"bcdfghjklmnpqrstvwxy"
+	.section	.text.main,"ax",@progbits
 	.align	2
 	.globl	main
 	.type	main, @function
 main:
 	addi	sp,sp,-48
 	sw	ra,44(sp)
-	sw	zero,28(sp)
-	sw	zero,24(sp)
+	sw	s0,40(sp)
+	addi	s0,sp,48
+	sw	zero,-20(s0)
+	sw	zero,-24(s0)
 	lui	a5,%hi(.LC0)
-	lw	a2,%lo(.LC0)(a5)
-	addi	a4,a5,%lo(.LC0)
-	lw	a3,4(a4)
-	addi	a4,a5,%lo(.LC0)
-	lw	a4,8(a4)
-	sw	a2,4(sp)
-	sw	a3,8(sp)
-	sw	a4,12(sp)
 	addi	a5,a5,%lo(.LC0)
-	lbu	a5,12(a5)
-	sb	a5,16(sp)
-	sb	zero,17(sp)
-	sb	zero,18(sp)
-	sb	zero,19(sp)
-	sb	zero,20(sp)
-	sb	zero,21(sp)
-	sb	zero,22(sp)
-	sb	zero,23(sp)
-	sw	zero,28(sp)
-	j	.L2
-.L5:
-	lw	a5,28(sp)
-	addi	a4,sp,32
+	lw	a1,0(a5)
+	lw	a2,4(a5)
+	lw	a3,8(a5)
+	lw	a4,12(a5)
+	sw	a1,-44(s0)
+	sw	a2,-40(s0)
+	sw	a3,-36(s0)
+	sw	a4,-32(s0)
+	lw	a5,16(a5)
+	sw	a5,-28(s0)
+	sw	zero,-20(s0)
+	j	.L6
+.L9:
+	lw	a5,-20(s0)
+	addi	a4,s0,-16
 	add	a5,a4,a5
 	lbu	a4,-28(a5)
 	li	a5,97
-	beq	a4,a5,.L3
-	lw	a5,28(sp)
-	addi	a4,sp,32
+	beq	a4,a5,.L7
+	lw	a5,-20(s0)
+	addi	a4,s0,-16
 	add	a5,a4,a5
 	lbu	a4,-28(a5)
 	li	a5,65
-	beq	a4,a5,.L3
-	lw	a5,28(sp)
-	addi	a4,sp,32
+	beq	a4,a5,.L7
+	lw	a5,-20(s0)
+	addi	a4,s0,-16
 	add	a5,a4,a5
 	lbu	a4,-28(a5)
 	li	a5,101
-	beq	a4,a5,.L3
-	lw	a5,28(sp)
-	addi	a4,sp,32
+	beq	a4,a5,.L7
+	lw	a5,-20(s0)
+	addi	a4,s0,-16
 	add	a5,a4,a5
 	lbu	a4,-28(a5)
 	li	a5,69
-	beq	a4,a5,.L3
-	lw	a5,28(sp)
-	addi	a4,sp,32
+	beq	a4,a5,.L7
+	lw	a5,-20(s0)
+	addi	a4,s0,-16
 	add	a5,a4,a5
 	lbu	a4,-28(a5)
 	li	a5,105
-	beq	a4,a5,.L3
-	lw	a5,28(sp)
-	addi	a4,sp,32
+	beq	a4,a5,.L7
+	lw	a5,-20(s0)
+	addi	a4,s0,-16
 	add	a5,a4,a5
 	lbu	a4,-28(a5)
 	li	a5,73
-	beq	a4,a5,.L3
-	lw	a5,28(sp)
-	addi	a4,sp,32
+	beq	a4,a5,.L7
+	lw	a5,-20(s0)
+	addi	a4,s0,-16
 	add	a5,a4,a5
 	lbu	a4,-28(a5)
 	li	a5,111
-	beq	a4,a5,.L3
-	lw	a5,28(sp)
-	addi	a4,sp,32
+	beq	a4,a5,.L7
+	lw	a5,-20(s0)
+	addi	a4,s0,-16
 	add	a5,a4,a5
 	lbu	a4,-28(a5)
 	li	a5,79
-	beq	a4,a5,.L3
-	lw	a5,28(sp)
-	addi	a4,sp,32
+	beq	a4,a5,.L7
+	lw	a5,-20(s0)
+	addi	a4,s0,-16
 	add	a5,a4,a5
 	lbu	a4,-28(a5)
 	li	a5,117
-	beq	a4,a5,.L3
-	lw	a5,28(sp)
-	addi	a4,sp,32
+	beq	a4,a5,.L7
+	lw	a5,-20(s0)
+	addi	a4,s0,-16
 	add	a5,a4,a5
 	lbu	a4,-28(a5)
 	li	a5,85
-	bne	a4,a5,.L4
-.L3:
-	lw	a5,24(sp)
+	bne	a4,a5,.L8
+.L7:
+	lw	a5,-24(s0)
 	addi	a5,a5,1
-	sw	a5,24(sp)
-.L4:
-	lw	a5,28(sp)
+	sw	a5,-24(s0)
+.L8:
+	lw	a5,-20(s0)
 	addi	a5,a5,1
-	sw	a5,28(sp)
-.L2:
-	lw	a4,28(sp)
+	sw	a5,-20(s0)
+.L6:
+	lw	a4,-20(s0)
 	li	a5,19
-	ble	a4,a5,.L5
-	lw	a0,24(sp)
+	ble	a4,a5,.L9
+	lw	a0,-24(s0)
 	call	test
 	mv	a5,a0
 	mv	a0,a5
 	lw	ra,44(sp)
+	lw	s0,40(sp)
 	addi	sp,sp,48
 	jr	ra
 	.size	main, .-main
+	.section	.text.test,"ax",@progbits
 	.align	2
 	.globl	test
 	.type	test, @function
 test:
 	addi	sp,sp,-32
 	sw	ra,28(sp)
-	sw	a0,12(sp)
-	lw	a4,12(sp)
+	sw	s0,24(sp)
+	addi	s0,sp,32
+	sw	a0,-20(s0)
+	lw	a4,-20(s0)
 	li	a5,3
-	bne	a4,a5,.L8
+	bne	a4,a5,.L12
 	call	pass
 	mv	a5,a0
-	j	.L9
-.L8:
+	j	.L13
+.L12:
 	call	fail
 	mv	a5,a0
-.L9:
+.L13:
 	mv	a0,a5
 	lw	ra,28(sp)
+	lw	s0,24(sp)
 	addi	sp,sp,32
 	jr	ra
 	.size	test, .-test
+	.section	.text.pass,"ax",@progbits
 	.align	2
 	.globl	pass
 	.type	pass, @function
 pass:
+	addi	sp,sp,-16
+	sw	ra,12(sp)
+	sw	s0,8(sp)
+	addi	s0,sp,16
 	li	a5,1
 	mv	a0,a5
-	ret
+	lw	ra,12(sp)
+	lw	s0,8(sp)
+	addi	sp,sp,16
+	jr	ra
 	.size	pass, .-pass
+	.section	.text.fail,"ax",@progbits
 	.align	2
 	.globl	fail
 	.type	fail, @function
 fail:
+	addi	sp,sp,-16
+	sw	ra,12(sp)
+	sw	s0,8(sp)
+	addi	s0,sp,16
 	li	a5,0
 	mv	a0,a5
-	ret
+	lw	ra,12(sp)
+	lw	s0,8(sp)
+	addi	sp,sp,16
+	jr	ra
 	.size	fail, .-fail
-	.ident	"GCC: (GNU) 8.3.0"
+	.ident	"GCC: (GNU) 16.2.0"
+	.section	.note.GNU-stack,"",@progbits

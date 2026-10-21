@@ -60,8 +60,11 @@ SECTIONS {
         flags = ["-std=gnu11", "-march=rv32i", "-mabi=ilp32", "-O0", "-ffreestanding",
                  "-fno-builtin", "-fno-stack-protector", "-fno-pic", "-fno-pie",
                  "-msmall-data-limit=0", "-mno-relax", "-ffunction-sections"]
-        subprocess.run([tools["gcc"], *flags, "-I", str(work), "-S", str(source),
-                        "-o", str(assembly)], check=True)
+        # GCC may emit memset even with -fno-builtin for array initialization.
+        # Keep its implementation in the published assembly as well as the ELF.
+        subprocess.run([tools["gcc"], *flags, "-I", str(work), "-include",
+                        str(Path(__file__).resolve().parent / "runtime.c"),
+                        "-S", str(source), "-o", str(assembly)], check=True)
         subprocess.run([tools["gcc"], *flags, "-nostdlib", "-nostartfiles",
                         "-Wl,--no-relax", "-Wl,-T," + str(script), str(assembly),
                         "-o", str(elf)], check=True)

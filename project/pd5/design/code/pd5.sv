@@ -13,6 +13,9 @@
  * Inputs:
  * 1) clk
  * 2) reset signal
+
+ *MAYANK Neupane
+ 
  */
 
 `include "constants.svh"
