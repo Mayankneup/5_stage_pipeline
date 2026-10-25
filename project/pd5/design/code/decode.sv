@@ -51,7 +51,7 @@ module decode #(
     assign insn_o   = insn_i;
     assign opcode_o = insn_i[6:0];
 
-    // Fields are taken straight from their fixed bit positions, whether or
+    // Fields are taken straight from their bit positions, whether or
     // not the instruction format uses them
     assign rd_o     = insn_i[11:7];
     assign funct3_o = insn_i[14:12];

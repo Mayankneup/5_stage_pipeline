@@ -70,7 +70,7 @@ module memory #(
       data_o = '0;
   end
 
-  // Reads are combinational, so data is valid whenever a read is requested
+  // Reads are combinational
   assign data_vld_o = read_en_i;
 
   // Little-endian write on the rising clock edge: SB writes 1 byte,

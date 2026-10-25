@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Rebuild a full benchmark for the PD5 bare-metal RV32I memory layout.
+"""Rebuild a full benchmark for the PD5 RV32I memory layout.
 
-From the repository root: python3 rv32-bmarks/rebuild.py BubbleSort
+From the root: python3 rv32-bmarks/rebuild.py BubbleSort
 Requires riscv64-elf-{gcc,objcopy,objdump} (Homebrew) or
 riscv64-unknown-elf-{gcc,objcopy,objdump} on PATH. Set RISCV_PREFIX
 to a different prefix, e.g. /opt/riscv/bin/riscv32-unknown-elf-.
